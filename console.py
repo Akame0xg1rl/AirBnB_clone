@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -18,6 +19,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
+        "Create a new instance of BaseModel, saves it (to the JSON file) and prints the id"
         if not arg:
             print("** class name missing **")
             return
@@ -29,6 +31,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
+        "Prints the string representation of an instance based on the class name and id"
         args = arg.split()
         if not args:
             print("** class name missing **")
@@ -46,6 +49,7 @@ class HBNBCommand(cmd.Cmd):
         print(storage.all()[key])
 
     def do_destroy(self, arg):
+        "Deletes an instance based on the class name and id"
         args = arg.split()
         if not args:
             print("** class name missing **")
@@ -64,6 +68,7 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, arg):
+        "Prints all string representation of all instances based or not on the class name"
         args = arg.split()
         if args and args[0] not in globals():
             print("** class doesn't exist **")
@@ -75,6 +80,7 @@ class HBNBCommand(cmd.Cmd):
         print(obj_list)
 
     def do_update(self, arg):
+        "Updates an instance based on the class name and id by adding or updating attribute"
         args = arg.split()
         if not args:
             print("** class name missing **")
