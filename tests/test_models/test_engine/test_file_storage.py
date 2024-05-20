@@ -30,6 +30,8 @@ class FileStorage:
                     cls_name = value['__class__']
                     cls = globals()[cls_name]
                     self.__objects[key] = cls(**value)
+                    if cls:
+                        self.__objects[key] = cls(**value)
         except FileNotFoundError:
             pass
 
