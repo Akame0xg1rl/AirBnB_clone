@@ -4,6 +4,7 @@ from models.base_model import BaseModel
 from models.user import User
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
@@ -104,6 +105,7 @@ class HBNBCommand(cmd.Cmd):
         obj = storage.all()[key]
         setattr(obj, args[2], args[3])
         obj.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
