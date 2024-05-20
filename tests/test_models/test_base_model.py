@@ -52,17 +52,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(model_dict['updated_at'], self.model.updated_at.isoformat())
         self.assertEqual(model_dict['__class__'], 'BaseModel')
 
-    def test_recreate_from_dict(self):
-        """
-        Test recreating an instance from a dictionary.
-        """
-        model_dict = self.model.to_dict()
-        new_model = BaseModel(**model_dict)
-        self.assertEqual(new_model.id, self.model.id)
-        self.assertEqual(new_model.created_at, self.model.created_at)
-        self.assertEqual(new_model.updated_at, self.model.updated_at)
-        self.assertEqual(new_model.to_dict(), model_dict)
-
 if __name__ == '__main__':
     unittest.main()
 

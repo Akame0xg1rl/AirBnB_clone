@@ -1,53 +1,44 @@
+#!/usr/bin/python3
+"""
+Defines the FileStorage class.
+"""
 import json
-import os
 from models.base_model import BaseModel
-from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.user import User
 
 class FileStorage:
+    """Serializes instances to a JSON file and deserializes them back."""
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """Returns the dictionary of serialized instances."""
+        """Returns the dictionary __objects."""
         return self.__objects
 
     def new(self, obj):
-        """Sets an instance in __objects with the key <obj class name>.id."""
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        """Sets in __objects the obj with key <obj class name>.id"""
+        key = obj.__class__.__name__ + "." + obj.id
         self.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to the JSON file."""
-        serialized_objects = {key: obj.to_dict() for key, obj in self.__objects.items()}
-        with open(self.__file_path, "w") as f:
-            json.dump(serialized_objects, f)
+        """Serializes __objects to the JSON file (path: __file_path)."""
+        obj_dict = {key: obj.to_dict() for key, obj in self.__objects.items()}
+        with open(self.__file_path, 'w') as f:
+            json.dump(obj_dict, f)
 
     def reload(self):
-        """Deserializes the JSON file to __objects."""
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, "r") as f:
-                try:
-                    serialized_objects = json.load(f)
-                    for key, value in serialized_objects.items():
-                        class_name, obj_id = key.split('.')
-                        if class_name == "BaseModel":
-                            self.__objects[key] = BaseModel(**value)
-                        elif class_name == "User":
-                            self.__objects[key] = User(**value)
-                        elif class_name == "Place":
-                            self.__objects[key] = Place(**value)
-                        elif class_name == "State":
-                            self.__objects[key] = State(**value)
-                        elif class_name == "City":
-                            self.__objects[key] = City(**value)
-                        elif class_name == "Amenity":
-                            self.__objects[key] = Amenity(**value)
-                        elif class_name == "Review":
-                            self.__objects[key] = Review(**value)
-                except Exception as e:
-                    print(f"Error: {e}")
+        """Deserializes the JSON file to __objects, if it exists."""
+        try:
+            with open(self.__file_path, 'r') as f:
+                obj_dict = json.load(f)
+                for key, value in obj_dict.items():
+                    cls_name = value['__class__']
+                    cls = globals()[cls_name]
+                    self.__objects[key] = cls(**value)
+        except FileNotFoundError:
+            pass
