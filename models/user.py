@@ -4,7 +4,9 @@ Module for User class.
 """
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
+
     """
     User class that inherits from BaseModel.
     Public class attributes:
@@ -17,4 +19,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-
