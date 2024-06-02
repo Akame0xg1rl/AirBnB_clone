@@ -9,6 +9,27 @@
     position: relative;
 }
 
+.filters .locations, .filters .amenities {
+    height: 100%;
+    width: 25%;
+    padding: 0 10px;
+}
+
+.filters .locations {
+    border-right: 1px solid #DDDDDD;
+}
+
+.filters h3 {
+    font-weight: 600;
+    margin: 0;
+}
+
+.filters h4 {
+    font-weight: 400;
+    font-size: 14px;
+    margin: 5px 0 0;
+}
+
 .filters button {
     background-color: #FF5A5F;
     color: #FFFFFF;
